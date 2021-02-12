@@ -8,8 +8,8 @@ Clone and generate the project files:
 
 ```
 cd yourCodeDirectory
-git clone https://github.com/mac-comp465-f18/triangledemoactvity
-cd triangledemoactivity
+git clone https://github.com/mac-comp465/triangle-demo-actvity
+cd triangle-demo-activity
 mkdir build
 cd build
 cmake-gui ..
