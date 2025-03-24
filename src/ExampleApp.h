@@ -58,7 +58,17 @@ private:
 	double _lastTime;
 	double _curFrameTime;
     
+    struct Vertex {
+        glm::vec3 position;
+        glm::vec2 texCoord;
+
+        Vertex(const glm::vec3 &pos, const glm::vec2 &uv)
+            : position(pos), texCoord(uv) {}
+    };
+    
     std::unique_ptr<basicgraphics::Mesh> _mesh;
+    std::shared_ptr<basicgraphics::Texture> tex = basicgraphics::Texture::create2DTextureFromFile("tex.jpg");
+    
     
     virtual void reloadShaders();
     basicgraphics::GLSLProgram _shader;

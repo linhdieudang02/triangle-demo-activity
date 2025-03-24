@@ -107,9 +107,51 @@ void ExampleApp::onRenderGraphicsContext(const VRGraphicsState &renderState) {
     
 
         //TODO: Initialize the _mesh variable with a triangle mesh uploaded to the GPU.
-        
-        
-        
+
+        std::vector<basicgraphics::Mesh::Vertex> cpuVertexArray;
+        std::vector<int> cpuIndexArray;
+        std::vector<std::shared_ptr<basicgraphics::Texture>> textures;
+
+        auto tex = basicgraphics::Texture::create2DTextureFromFile("tex.jpg");
+        textures.push_back(tex);
+
+        // Create 3 triangle vertices
+        basicgraphics::Mesh::Vertex v1, v2, v3;
+
+        v1.position = glm::vec3( 0.0f,  0.5f, 0.0f);
+        v1.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+        v1.texCoord0 = glm::vec2(0.5f, 1.0f);
+
+        v2.position = glm::vec3(-0.5f, -0.5f, 0.0f);
+        v2.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+        v2.texCoord0 = glm::vec2(0.0f, 0.0f);
+
+        v3.position = glm::vec3( 0.5f, -0.5f, 0.0f);
+        v3.normal = glm::vec3(0.0f, 0.0f, 1.0f);
+        v3.texCoord0 = glm::vec2(1.0f, 0.0f);
+
+        cpuVertexArray.push_back(v1);
+        cpuVertexArray.push_back(v2);
+        cpuVertexArray.push_back(v3);
+
+        // Optional index data
+        cpuIndexArray = {0, 1, 2};
+
+        int vertexByteSize = static_cast<int>(sizeof(basicgraphics::Mesh::Vertex) * cpuVertexArray.size());
+        int indexByteSize = static_cast<int>(sizeof(int) * cpuIndexArray.size());
+
+        _mesh.reset(new basicgraphics::Mesh(
+            textures,
+            GL_TRIANGLES,
+            GL_STATIC_DRAW,
+            vertexByteSize,
+            indexByteSize,
+            0,                    // vertex offset
+            cpuVertexArray,       // vertex data (vector passed by ref)
+            static_cast<int>(cpuIndexArray.size()),
+            indexByteSize,
+            cpuIndexArray.data()  // pointer to index data
+        ));
     }
 }
 
